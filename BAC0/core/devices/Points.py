@@ -661,8 +661,8 @@ class Point:
         cov_subscription.stop()
         # await cov_subscription.task
 
-    def update_description(self, value):
-        asyncio.create_task(self._update_description(value=value))
+    async def update_description(self, value):
+        await self._update_description(value=value)
 
     async def _update_description(self, value):
         """
@@ -676,7 +676,7 @@ class Point:
             value=value,
             prop_id="description",
         )
-        self.properties.description = str(self.read_property("description"))
+        self.properties.description = str(await self.read_property("description"))
 
     def tag(self, tag_id, tag_value, lst=None):
         """

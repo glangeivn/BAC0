@@ -1,3 +1,5 @@
+import asyncio
+
 from bacpypes3.apdu import WritePropertyRequest
 from bacpypes3.app import Application
 from bacpypes3.constructeddata import Any
@@ -20,7 +22,7 @@ class TextMixin:
         obj_inst: int,
         value: str,
         prop_id: str = "description",
-    ) -> None:
+    ) -> asyncio.Future:
         request = self.build_text_write_request(
             addr=addr,
             obj_type=obj_type,
@@ -28,7 +30,7 @@ class TextMixin:
             value=value,
             prop_id=prop_id,
         )
-        self.write_text_value(request)
+        return self.write_text_value(request)
 
     def build_text_write_request(
         self,
@@ -51,10 +53,10 @@ class TextMixin:
 
     def write_text_value(
         self, request: WritePropertyRequest, timeout: int = 10
-    ) -> None:
+    ) -> asyncio.Future:
         _this_application: BAC0Application = self.this_application
         _app: Application = _this_application.app
 
         self.log(f"{'- request:':>12} {request}", level="debug")
 
-        _app.request(request)
+        return _app.request(request)

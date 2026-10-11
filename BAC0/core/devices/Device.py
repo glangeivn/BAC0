@@ -751,7 +751,7 @@ class DeviceConnected(Device):
 
     async def write_property(self, prop, value, priority=None):
         if prop == "description":
-            self.update_description(value)
+            await self.update_description(value)
         else:
             if priority is not None:
                 priority = f"- {priority}"
@@ -807,7 +807,7 @@ class DeviceConnected(Device):
         await self.properties.network.send_text_write_request(
             addr=self.properties.address,
             obj_type="device",
-            obj_inst=int(self.device_id),
+            obj_inst=int(self.properties.device_id),
             value=value,
             prop_id="description",
         )

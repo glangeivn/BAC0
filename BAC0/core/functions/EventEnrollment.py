@@ -19,8 +19,7 @@ class EventEnrollment:
 
         address = Address(destination)
         request.pduDestination = address
-        request.propertyValue = Any(None)
-        request.propertyValue.cast_in(event_parameters)
+        request.propertyValue = Any(event_parameters)
         request.priority = 15
         return request
 
@@ -41,7 +40,7 @@ class EventEnrollment:
         self, destination, event_enrollment_instance, event_parameters
     ):
         if type(event_parameters) is not EventParameter:
-            self.log.warning("Data is not of type EventParameter.")
+            self.log("Data is not of type EventParameter.", level="warning")
             return
 
         request = self.__make_event_parameters_request(
@@ -59,8 +58,7 @@ class EventEnrollment:
 
         address = Address(destination)
         request.pduDestination = address
-        request.propertyValue = Any(None)
-        request.propertyValue.cast_in(obj_prop_ref)
+        request.propertyValue = Any(obj_prop_ref)
         request.priority = 15
         return request
 
@@ -73,13 +71,13 @@ class EventEnrollment:
         _app.request(request)
 
         self._log.info(
-            "Object Property Reference Write request sent to device : {request.pduDestination}"
+            f"Object Property Reference Write request sent to device : {request.pduDestination}"
         )
 
     # external interface
     def write_obj_prop_ref(self, destination, event_enrollment_instance, obj_prop_ref):
         if type(obj_prop_ref) is not DeviceObjectPropertyReference:
-            self.log.warning("Data is not of type ObjectPropertyReference.")
+            self.log("Data is not of type ObjectPropertyReference.", level="warning")
             return
 
         request = self.__make_obj_prop_ref_request(
