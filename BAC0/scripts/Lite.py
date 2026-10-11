@@ -31,6 +31,7 @@ from ..core.devices.Points import Point
 from ..core.devices.Trends import _TrendLog
 from ..core.devices.Virtuals import VirtualPoint
 from ..core.functions.Alias import Alias
+from ..core.functions.Calendar import Calendar
 from ..core.functions.CoV import COVSubscription
 
 # from ..core.functions.legacy.cov import CoV
@@ -94,7 +95,7 @@ class Lite(
     # DeviceCommunicationControl,
     COVSubscription,
     Schedule,
-    # Calendar,
+    Calendar,
     TextMixin,
 ):
     """
