@@ -98,11 +98,12 @@ class Calendar:
 
         self.log(f"{'- request:':>12} {request}", level="debug")
 
-        _app.request(request)
+        future = _app.request(request)
 
         self._log.info(
             f"Calendar Write request sent to device : {request.pduDestination}"
         )
+        return future
 
     def write_calendar_dateList(self, destination, calendar_instance, dates):
         calendar = self.create_calendar(dates)
@@ -111,7 +112,7 @@ class Calendar:
             object_instance=calendar_instance,
             dateList=calendar,
         )
-        self.send_calendar_request(request)
+        return self.send_calendar_request(request)
 
     async def read_calendar_dateList(self, address, calendar_instance):
         """
